@@ -1,17 +1,21 @@
 #include "GameRecommender.h"
 
 #include <unordered_set>
+#include <iostream>
 
 using namespace std;
 
-Game::Game(string name, vector<string> genres, vector<string> features, int rating, float price){
+Game::Game(){
+}
+
+Game::Game(string name, vector<string> genres, vector<string> features, float rating, float price)
+{
 
     this->name = name;
     this-> genres = genres;
     this-> features = features;
     this->rating = rating;
     this->price = price;
-
 }
 
 float GameRecommender::calcGameSimilarity(const Game &game1, const Game &game2){
@@ -69,7 +73,7 @@ void GameRecommender::addEdge(const Game &game1, const Game &game2, float& simil
 }
 
 void GameRecommender::addGame(const Game &game){  //add the game data to the gameDatabase
-    gameDatabase[game.name] = game;
+    gameDatabase.emplace(game.name, game);
     
 }
 
@@ -79,11 +83,22 @@ void GameRecommender::buildAdjList(){
         for (auto itB = next(itA); itB != gameDatabase.end(); itB++){
 
             float similarity = calcGameSimilarity(itA -> second, itB -> second);
+
+            cout << similarity << endl;
             if (similarity > 0.5f){   //store edges between games that are similar
                 addEdge(itA -> second, itB ->second, similarity);
                 addEdge(itB -> second, itA -> second, similarity);
             }
         }
+    }
+
+
+    for (auto& [name, neighbors] : adjList){
+        cout << name << " ";
+        for (auto& neighbor : neighbors){
+            cout << neighbor.first << " " << neighbor.second << " ";
+        }
+        cout << endl;
     }
 
 }
