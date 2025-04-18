@@ -44,6 +44,11 @@ class GameRecommender{
         void buildAdjList();
 
 
+        vector<pair<string, float>> getSimilarGames(Game game, int count = 5);
+
+        vector<string> depthFirstSearch();
+
+        vector<string> breadthFirstSearch();
 
 
 };

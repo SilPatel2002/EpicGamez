@@ -2,6 +2,7 @@
 
 #include <unordered_set>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -103,4 +104,20 @@ void GameRecommender::buildAdjList(){
 
 }
 
+vector<pair<string, float>> GameRecommender::getSimilarGames(Game game, int count){
 
+    vector<pair<string, float>> similarGames;
+
+    similarGames = adjList.at(game.name);
+
+    sort(similarGames.begin(), similarGames.end(), [](const auto& a, const auto& b) {return a.second > b.second});
+            //sort the list from highest similarity score to lowest
+
+    if (similarGames.size() > count){
+        similarGames.resize(count);
+    }
+
+
+    return similarGames;
+
+}
