@@ -147,11 +147,39 @@ vector<string> GameRecommender::depthFirstSearch(string src, string dest){
                 visited.insert(v.first);
                 s.push(v.first);
             }
-            
+
         }
 
     }
 
 
     
+}
+
+vector<string> GameRecommender::breadthFirstSearch(string src, string dest){
+
+    vector<string> bfs;
+    set<string> visited;
+    queue<string> q;
+
+    visited.insert(src);
+    q.push(src);
+
+    while(!q.empty()){
+        
+        string u = q.front();
+        bfs.push_back(u);
+        q.pop();
+        vector<pair<string,float>> neighbors = adjList[u];
+        sort(neighbors.begin(), neighbors.end(), [](const auto& a, const auto& b) {return a.second > b.second});
+            //sort the list from highest similarity score to lowest
+
+        for (auto& v : neighbors){ // v is a pair of (string, float)
+            
+            if (visited.count(v.first) == 0){   // if game not visited add it to the set and stack
+                visited.insert(v.first);
+                q.push(v.first);
+            }
+        }
+    }  
 }
