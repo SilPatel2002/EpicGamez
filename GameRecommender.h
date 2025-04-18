@@ -46,9 +46,9 @@ class GameRecommender{
 
         vector<pair<string, float>> getSimilarGames(Game game, int count = 5);
 
-        vector<string> depthFirstSearch();
+        vector<string> depthFirstSearch(string src, string dest);
 
-        vector<string> breadthFirstSearch();
+        vector<string> breadthFirstSearch(string src, string dest);
 
 
 };

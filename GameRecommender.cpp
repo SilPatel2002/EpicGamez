@@ -3,6 +3,9 @@
 #include <unordered_set>
 #include <iostream>
 #include <algorithm>
+#include <set>
+#include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -120,4 +123,35 @@ vector<pair<string, float>> GameRecommender::getSimilarGames(Game game, int coun
 
     return similarGames;
 
+}
+
+vector<string> GameRecommender::depthFirstSearch(string src, string dest){
+
+    vector<string> dfs;
+    set<string> visited;
+    stack<string> s;
+
+    visited.insert(src);
+    s.push(src);
+
+    while(!s.empty()){
+        
+        string u = s.top();
+        dfs.push_back(u);
+        s.pop();
+        vector<pair<string,float>> neighbors = adjList[u];
+
+        for (auto& v : neighbors){ // v is a pair of (string, float)
+            
+            if (visited.count(v.first) == 0){   // if game not visited add it to the set and stack
+                visited.insert(v.first);
+                s.push(v.first);
+            }
+            
+        }
+
+    }
+
+
+    
 }
