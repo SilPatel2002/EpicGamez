@@ -76,7 +76,11 @@ void GameRecommender::addEdge(const Game &game1, const Game &game2, float& simil
 
 }
 
-void GameRecommender::addGame(const Game &game){  //add the game data to the gameDatabase
+void GameRecommender::addGame(const string& name, vector<string>& genre, vector<string>& features, float rating, float price){ 
+    
+    Game game(name, genre, features, rating, price);
+
+    //add the game data to the gameDatabase
     gameDatabase.emplace(game.name, game);
     
 }
@@ -113,7 +117,7 @@ vector<pair<string, float>> GameRecommender::getSimilarGames(Game game, int coun
 
     similarGames = adjList.at(game.name);
 
-    sort(similarGames.begin(), similarGames.end(), [](const auto& a, const auto& b) {return a.second > b.second});
+    sort(similarGames.begin(), similarGames.end(), [](const auto& a, const auto& b) {return a.second > b.second;});
             //sort the list from highest similarity score to lowest
 
     if (similarGames.size() > count){
@@ -153,7 +157,7 @@ vector<string> GameRecommender::depthFirstSearch(string src, string dest){
     }
 
 
-    
+    return dfs;
 }
 
 vector<string> GameRecommender::breadthFirstSearch(string src, string dest){
@@ -171,7 +175,7 @@ vector<string> GameRecommender::breadthFirstSearch(string src, string dest){
         bfs.push_back(u);
         q.pop();
         vector<pair<string,float>> neighbors = adjList[u];
-        sort(neighbors.begin(), neighbors.end(), [](const auto& a, const auto& b) {return a.second > b.second});
+        sort(neighbors.begin(), neighbors.end(), [](const auto& a, const auto& b) {return a.second > b.second;});
             //sort the list from highest similarity score to lowest
 
         for (auto& v : neighbors){ // v is a pair of (string, float)
@@ -182,4 +186,6 @@ vector<string> GameRecommender::breadthFirstSearch(string src, string dest){
             }
         }
     }  
+
+    return bfs;
 }

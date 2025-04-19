@@ -39,7 +39,7 @@ class GameRecommender{
 
     public:
 
-        void addGame(const Game& game);
+        void addGame(const string& name, vector<string>& genre, vector<string>& features, float rating, float price);
 
         void buildAdjList();
 
