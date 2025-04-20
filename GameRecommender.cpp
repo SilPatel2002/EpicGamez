@@ -90,11 +90,16 @@ void GameRecommender::buildAdjList(){
     for (auto itA = gameDatabase.begin(); itA != gameDatabase.end(); itA++){  //loop through each combination of the games
         for (auto itB = next(itA); itB != gameDatabase.end(); itB++){
 
+
+            if (itA -> second.rating < 5 || itB -> second.rating < 5){            // and games have to have a rating otherwise, skip
+                continue;
+            }
+
             float similarity = calcGameSimilarity(itA -> second, itB -> second);
 
             cout << similarity << endl;
-            if (similarity > 0.5f){   //store edges between games that are similar
-                addEdge(itA -> second, itB ->second, similarity);
+            if (similarity > 0.5f){                                                                                
+                addEdge(itA -> second, itB -> second, similarity);   //store edges between games that are similar 
                 addEdge(itB -> second, itA -> second, similarity);
             }
         }
